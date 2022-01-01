@@ -16,6 +16,15 @@
 
 [LAÇOS OU LOOPS COM SHELL SCRIPT (FOR, WHILE E UNTI](https://www.livrosdelinux.com.br/lacos-ou-loops-for-while-e-until/)
 
+## Dependencias
+
+```sh
+apt install whois
+cd /usr/lib/zabbix/externalscripts
+chown zabbix. /usr/lib/zabbix/externalscripts/asname
+chmod +x /usr/lib/zabbix/externalscripts/asname
+```
+
 ## Script
 
 ```sh
