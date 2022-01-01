@@ -16,7 +16,7 @@
 
 [LAÇOS OU LOOPS COM SHELL SCRIPT (FOR, WHILE E UNTI](https://www.livrosdelinux.com.br/lacos-ou-loops-for-while-e-until/)
 
-## Dependencias
+## Dependências
 
 ```sh
 apt install whois
