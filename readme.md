@@ -24,6 +24,8 @@
 
 [30 Exemplos de Comando SED Com Regex](https://terminalroot.com.br/2015/07/30-exemplos-do-comando-sed-com-regex.html)
 
+[JavaScript Zabbix preprocessing cheat sheet, substitution samples](https://catonrug.blogspot.com/2019/05/javascript-zabbix-preprocessing-cheat-sheet.html)
+
 ## Dependências
 
 ```sh
