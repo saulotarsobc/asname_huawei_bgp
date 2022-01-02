@@ -30,6 +30,8 @@ https://stackoverflow.com/questions/36214601/bash-parse-snmpwalk-output
 
 https://unix.stackexchange.com/questions/433873/extracting-specific-data-from-snmp
 
+https://stackoverflow.com/questions/10586153/how-to-split-a-string-into-an-array-in-bash
+
 ## Dependências
 
 ```sh
