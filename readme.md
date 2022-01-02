@@ -28,6 +28,8 @@
 
 https://stackoverflow.com/questions/36214601/bash-parse-snmpwalk-output
 
+https://unix.stackexchange.com/questions/433873/extracting-specific-data-from-snmp
+
 ## Dependências
 
 ```sh
