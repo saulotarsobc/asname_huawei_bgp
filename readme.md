@@ -26,6 +26,8 @@
 
 [JavaScript Zabbix preprocessing cheat sheet, substitution samples](https://catonrug.blogspot.com/2019/05/javascript-zabbix-preprocessing-cheat-sheet.html)
 
+https://stackoverflow.com/questions/36214601/bash-parse-snmpwalk-output
+
 ## Dependências
 
 ```sh
