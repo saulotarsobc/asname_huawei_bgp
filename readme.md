@@ -22,6 +22,8 @@
 
 [LAÇOS OU LOOPS COM SHELL SCRIPT (FOR, WHILE E UNTI](https://www.livrosdelinux.com.br/lacos-ou-loops-for-while-e-until/)
 
+[30 exemplos de comando sed com regex](https://terminalroot.com.br/2015/07/30-exemplos-do-comando-sed-com-regex.html)
+
 ## Dependências
 
 ```sh
