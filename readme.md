@@ -6,11 +6,9 @@
 
 ## Material de apoio
 
-[Bash split string into array using 4 simple methods
-](https://www.golinuxcloud.com/bash-split-string-into-array-linux/)
+[Bash split string into array using 4 simple methods](https://www.golinuxcloud.com/bash-split-string-into-array-linux/)
 
-[JSONPath Online Evaluator - jsonpath.com
-](http://jsonpath.com/)
+[JSONPath Online Evaluator - jsonpath.com](http://jsonpath.com/)
 
 [JSON Formatter](https://jsonformatter.curiousconcept.com/)
 
@@ -26,11 +24,11 @@
 
 [JavaScript Zabbix preprocessing cheat sheet, substitution samples](https://catonrug.blogspot.com/2019/05/javascript-zabbix-preprocessing-cheat-sheet.html)
 
-https://stackoverflow.com/questions/36214601/bash-parse-snmpwalk-output
+[Bash - Parse snmpwalk output](https://stackoverflow.com/questions/36214601/bash-parse-snmpwalk-output)
 
-https://unix.stackexchange.com/questions/433873/extracting-specific-data-from-snmp
+[Extracting specific data from SNMP](https://unix.stackexchange.com/questions/433873/extracting-specific-data-from-snmp)
 
-https://stackoverflow.com/questions/10586153/how-to-split-a-string-into-an-array-in-bash
+[How to split a string into an array in Bash?](https://stackoverflow.com/questions/10586153/how-to-split-a-string-into-an-array-in-bash)
 
 ## Dependências
 
@@ -39,45 +37,35 @@ apt install whois
 cd /usr/lib/zabbix/externalscripts
 chown zabbix. /usr/lib/zabbix/externalscripts/asname
 chmod +x /usr/lib/zabbix/externalscripts/asname
+nano asname
 ```
 
 ## Script
 
 ```sh
 #! /usr/bin/bash
-# PARAMETROS
-# 1 - comunidade snmp
-# 2 - ip do dispositivo
-# cd /usr/lib/zabbix/externalscripts
-# APAGAR
-# echo "" > asname ; nano asname
 
-# ASNAME ## SNMPWALK NO OID QUE RETORNA OS ASNAME
 ASNAMES=$(snmpwalk -v 2c -c $1 $2 1.3.6.1.4.1.2011.5.25.177.1.1.2.1.2  | sed 's/.*: //');
 ARRASNAMES=($ASNAMES);
 
-# SNMPINDEX ## SNMPWALK NO OID QUE RETORNA OS INDEX SNMP
 SNMPINDEXS=$(snmpwalk -v 2c -c $1 $2 1.3.6.1.4.1.2011.5.25.177.1.1.2.1.2 | sed 's/ = .*//'  | sed 's/iso.3.6.1.4.1.2011.5.25.177.1.1.2.1.2.//');
 ARRSNMPINDEXS=($SNMPINDEXS);
 
-# REMOTEADD ## SNMPWALK NO OID QUE RETORNA OS REMOTE ADDRESS
 REMOTEADDS=$(snmpwalk -v 2c -c $1 $2 1.3.6.1.4.1.2011.5.25.177.1.1.2.1.4 | sed 's/.*: //' | sed 's/"//' | sed 's/"//');
 ARRREMOTEADDS=($REMOTEADDS);
 
-C=0; # CONTADOR
-MAX=${#ARRASNAMES[@]}; # QUANTIDADE DE ITENS NO ARRAY
+C=0;
+MAX=${#ARRASNAMES[@]};
 
 echo '[{"BGP": [';
-while [  $C -lt $MAX ]; do
 
+while [  $C -lt $MAX ]; do
     ASNAME=$(whois -h whois.cymru.com  AS${ARRASNAMES[$C]} | egrep -v "AS Name");
     SNMPINDEX=${ARRSNMPINDEXS[$C]};
     REMOTEADD=${ARRREMOTEADDS[$C]};
-
     echo '{"ASNAME":"'$ASNAME'","SNMPINDEX":"'$SNMPINDEX'","REMOTEADD":"'$REMOTEADD'"},'
-
     let C=C+1;
-
 done
+
 echo ']}]'
 ```
