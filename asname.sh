@@ -1,6 +1,10 @@
 #! /usr/bin/bash
+# PARAMETROS
 # 1 - comunidade snmp
 # 2 - ip do dispositivo
+# cd /usr/lib/zabbix/externalscripts
+# APAGAR
+# echo "" > asname ; nano asname
 
 # ASNAME ## SNMPWALK NO OID QUE RETORNA OS ASNAME
 ASNAMES=$(snmpwalk -v 2c -c $1 $2 1.3.6.1.4.1.2011.5.25.177.1.1.2.1.2  | sed 's/.*: //');
