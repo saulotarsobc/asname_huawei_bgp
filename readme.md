@@ -2,7 +2,7 @@
 
 ## 🏗️ EM CONSTRUÇÃO 🏗️
 
-> Monitoramento de BGP usando script externo para "pegar" o "nome dos ASN"
+> Monitoramento de BGP usando script externo para "pegar" o "nome dos ASN".
 
 ## Material de apoio
 
@@ -65,3 +65,11 @@ do
     let C=C+1;
 done
 ```
+
+> Esse script tem o CSV como formato de saida de dados. Por isso vamos usar o pre-processamento do Zabbix para convertelo para um formato Json.
+
+![Zabbix - Pre-processamento](img/pre%20processamento.png)
+
+1) Nome: "CSV to JSON".
+2) Parâmetros: "|" (pipe).
+   1) Esse sinal é o que delimita as informações do nosso CSV. Geralmente usamos a vírgula para isso. Mas como o 'nome do asn' pode conter virgulas tambem, optei por separar as informações com o "|" (pipe).
