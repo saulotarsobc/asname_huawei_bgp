@@ -75,3 +75,5 @@ done
 1) Nome: "CSV to JSON".
 2) Parâmetros: "|" (pipe).
    1) Esse sinal é o que delimita as informações do nosso CSV. Geralmente usamos a vírgula para isso. Mas como o 'nome do asn' pode conter virgulas tambem, optei por separar as informações com o "|" (pipe).
+
+[Template - Zabbix 5.4](SC%20-%20Huawei%20NE40%20-%20NE8000%20-%20BGP%20-%20ASNAME%20-%20ZABBIX%205_4_9.yaml)

@@ -1,0 +1,216 @@
+zabbix_export:
+  version: '5.4'
+  date: '2022-01-04T13:04:30Z'
+  groups:
+    -
+      uuid: 0c105496f5084ea2b02a39e9aa9be09f
+      name: 'HUAWEI BGP'
+  templates:
+    -
+      uuid: 338c04b0a5e14697b39d6746128591b5
+      template: 'SC - Huawei NE40 - NE8000 - BGP - ASNAME'
+      name: 'SC - Huawei NE40 - NE8000 - BGP - ASNAME'
+      description: 'retornando o nome dos AS com o app whois'
+      groups:
+        -
+          name: 'HUAWEI BGP'
+      items:
+        -
+          uuid: c48f13edd02a47aa9cf9d8c9f500ec7b
+          name: getJson
+          type: EXTERNAL
+          key: 'asname[{$SNMP_COMMUNITY} {HOST.IP}]'
+          delay: 20m
+          history: '0'
+          trends: '0'
+          value_type: CHAR
+          preprocessing:
+            -
+              type: CSV_TO_JSON
+              parameters:
+                - '|'
+                - ''
+                - '1'
+          tags:
+            -
+              tag: bgpsc
+              value: 'get json'
+        -
+          uuid: 24280499654f421c98f2552dc834a52c
+          name: 'Total de Rotas IPv4 na FIB'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.4.24.3.0
+          key: hwIPv4FibRoutes
+          delay: 5m
+          history: 14d
+          trends: 30d
+          units: Prefixes
+          tags:
+            -
+              tag: bgpsc
+              value: 'fib ipv4'
+        -
+          uuid: 72f4e4a71cbc4732ad232ae1615862e7
+          name: 'Total de Rotas IPv4 na RIB'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2011.5.25.177.9.1.0
+          key: hwIPv4RibRoutes
+          delay: 5m
+          history: 14d
+          trends: 30d
+          units: Prefixes
+          description: 'O número total de rotas BGP.'
+          tags:
+            -
+              tag: bgpsc
+              value: 'rib ipv4'
+        -
+          uuid: 9d71369a7c1c4b979c82773ada2c0818
+          name: 'Total de Rotas IPv6 na FIB'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.55.1.9.0
+          key: hwIPv6FibRoutes
+          delay: 5m
+          history: 14d
+          trends: 30d
+          units: Prefixes
+          description: 'O número de entradas atuais da Tabela de rota ipv6. Principalmente para evitar a leitura da tabela para determinar esse número.'
+          tags:
+            -
+              tag: bgpsc
+              value: 'fib ipv6'
+      discovery_rules:
+        -
+          uuid: 7f38cef91ff04efb8f91ccb8eef5146b
+          name: 'discoveryJSON - BGP'
+          type: DEPENDENT
+          key: discovery.json.bgp
+          delay: '0'
+          filter:
+            conditions:
+              -
+                macro: '{#STATE}'
+                value: ^6$
+                formulaid: A
+          item_prototypes:
+            -
+              uuid: 19aa3e56036643c5a922d9c23b4bff37
+              name: '{#REMOTEADD} - Prefixos Recebidos'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2011.5.25.177.1.1.3.1.1.{#SNMPINDEX}'
+              key: 'bgp.prefices.rcv[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 60d
+              units: prefixes
+              tags:
+                -
+                  tag: bgpsc
+                  value: 'prefixos recebidos'
+            -
+              uuid: a793411b3cad43c3937f50f12c0ad946
+              name: '{#REMOTEADD} - Prefixos Enviados'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2011.5.25.177.1.1.3.1.3.{#SNMPINDEX}'
+              key: 'bgp.prefices.sent[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 60d
+              units: prefixes
+              tags:
+                -
+                  tag: bgpsc
+                  value: 'prefixos enviados'
+            -
+              uuid: 2894d418ca4f4dff95dd4afe2b370c2a
+              name: '{#REMOTEADD} - Endereco Remoto'
+              type: TRAP
+              key: 'bgp.remote.add[{#SNMPINDEX}]'
+              delay: '0'
+              history: 30d
+              trends: '0'
+              value_type: TEXT
+              tags:
+                -
+                  tag: bgpsc
+                  value: 'remote address'
+            -
+              uuid: 66eecf994e40492097df349e2529f8b8
+              name: '{#REMOTEADD} - {#ASNAME} - State'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2011.5.25.177.1.1.2.1.5.{#SNMPINDEX}'
+              key: 'bgp.state[{#SNMPINDEX}]'
+              history: 30d
+              trends: 60d
+              valuemap:
+                name: 'bgp state'
+              tags:
+                -
+                  tag: bgpsc
+                  value: state
+              trigger_prototypes:
+                -
+                  uuid: 9f65bdee2c364763aa1d381ad17c6a68
+                  expression: 'last(/SC - Huawei NE40 - NE8000 - BGP - ASNAME/bgp.state[{#SNMPINDEX}])<>6'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'last(/SC - Huawei NE40 - NE8000 - BGP - ASNAME/bgp.state[{#SNMPINDEX}])=6'
+                  name: 'BGP - {#ASNAME} - {#REMOTEADD}'
+                  opdata: DOWN
+                  priority: HIGH
+                  manual_close: 'YES'
+                  tags:
+                    -
+                      tag: bgpsc
+                      value: 'trigger state'
+            -
+              uuid: 030b147772524b47814c2a8ec8c2582a
+              name: '{#REMOTEADD} - Uptime'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2011.5.25.177.1.1.2.1.7.{#SNMPINDEX}'
+              key: 'bgp.uptime[{#SNMPINDEX}]'
+              delay: 3m
+              history: 30d
+              trends: 60d
+              units: uptime
+              tags:
+                -
+                  tag: bgpsc
+                  value: uptime
+          master_item:
+            key: 'asname[{$SNMP_COMMUNITY} {HOST.IP}]'
+          lld_macro_paths:
+            -
+              lld_macro: '{#ASNAME}'
+              path: $..ASNAME.first()
+            -
+              lld_macro: '{#REMOTEADD}'
+              path: $..REMOTEADD.first()
+            -
+              lld_macro: '{#SNMPINDEX}'
+              path: $..SNMPINDEX.first()
+            -
+              lld_macro: '{#STATE}'
+              path: $..STATE.first()
+      valuemaps:
+        -
+          uuid: 0c5ed05805b041afbbcc556edaad965a
+          name: 'bgp state'
+          mappings:
+            -
+              value: '1'
+              newvalue: idle
+            -
+              value: '2'
+              newvalue: connect
+            -
+              value: '3'
+              newvalue: active
+            -
+              value: '4'
+              newvalue: opensent
+            -
+              value: '5'
+              newvalue: openconfirm
+            -
+              value: '6'
+              newvalue: established
