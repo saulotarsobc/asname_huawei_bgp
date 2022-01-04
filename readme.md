@@ -44,28 +44,31 @@ nano asname
 
 ```sh
 #! /usr/bin/bash
-
-ASNAMES=$(snmpwalk -v 2c -c $1 $2 1.3.6.1.4.1.2011.5.25.177.1.1.2.1.2  | sed 's/.*: //');
+OID="1.3.6.1.4.1.2011.5.25.177.1.1.2.1";
+ASNAMES=$(snmpwalk -v 2c -c $1 $2 $OID.2 | \
+    sed 's/.*: //');
+SNMPINDEXS=$(snmpwalk -v 2c -c $1 $2 $OID.2 |\
+    sed 's/ = .*//' |\
+    sed 's/iso.*.1.2.1.2.//');
+REMOTEADDS=$(snmpwalk -v 2c -c $1 $2 $OID.4 |\
+    sed 's/.*: //' |\
+    sed 's/"//' |\
+    sed 's/"//');
+STATES=$(snmpwalk -v 2c -c $1 $2 $OID.5 | \
+    sed 's/.*: //');
+# TRANSFORMANDO STRINGS PARA ARRAYS
 ARRASNAMES=($ASNAMES);
-
-SNMPINDEXS=$(snmpwalk -v 2c -c $1 $2 1.3.6.1.4.1.2011.5.25.177.1.1.2.1.2 | sed 's/ = .*//'  | sed 's/iso.3.6.1.4.1.2011.5.25.177.1.1.2.1.2.//');
 ARRSNMPINDEXS=($SNMPINDEXS);
-
-REMOTEADDS=$(snmpwalk -v 2c -c $1 $2 1.3.6.1.4.1.2011.5.25.177.1.1.2.1.4 | sed 's/.*: //' | sed 's/"//' | sed 's/"//');
 ARRREMOTEADDS=($REMOTEADDS);
-
+ARRSTATES=($STATES);
 C=0;
 MAX=${#ARRASNAMES[@]};
-
-echo '[{"BGP": [';
-
-while [  $C -lt $MAX ]; do
+echo "ASNAME|SNMPINDEX|REMOTEADD|STATE";
+while [  $C -lt $MAX ];
+do
+    # ASNAME=${ARRASNAMES[$C]};
     ASNAME=$(whois -h whois.cymru.com  AS${ARRASNAMES[$C]} | egrep -v "AS Name");
-    SNMPINDEX=${ARRSNMPINDEXS[$C]};
-    REMOTEADD=${ARRREMOTEADDS[$C]};
-    echo '{"ASNAME":"'$ASNAME'","SNMPINDEX":"'$SNMPINDEX'","REMOTEADD":"'$REMOTEADD'"},'
+    echo "$ASNAME|${ARRSNMPINDEXS[$C]}|${ARRREMOTEADDS[$C]}|${ARRSTATES[$C]}"
     let C=C+1;
 done
-
-echo ']}]'
 ```
