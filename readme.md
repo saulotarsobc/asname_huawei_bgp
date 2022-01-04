@@ -68,7 +68,7 @@ done
 
 ## PRÉ-PROCESSAMENTO - ZABBIX
 
-> Esse script tem o CSV como formato de saida de dados. Por isso vamos usar o pre-processamento do Zabbix para convertelo para um formato Json.
+> Esse script tem o [CSV](https://rockcontent.com/br/blog/csv/) como formato de saida de dados. Por isso vamos usar o pre-processamento do Zabbix para convertelo para um formato Json.
 
 ![Zabbix - Pre-processamento](img/pre%20processamento.png)
 
