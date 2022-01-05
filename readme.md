@@ -30,6 +30,8 @@
 
 [How to split a string into an array in Bash?](https://stackoverflow.com/questions/10586153/how-to-split-a-string-into-an-array-in-bash)
 
+[Unix / Linux - Shell Basic Operators](https://www.tutorialspoint.com/unix/unix-basic-operators.htm)
+
 ## Dependências
 
 ```sh
