@@ -1,7 +1,5 @@
 # Huawei - Monitoramento de BGP
 
-## 🏗️ EM CONSTRUÇÃO 🏗️
-
 > Monitoramento de BGP usando script externo para "pegar" o "nome dos ASN".
 
 ## Material de apoio
