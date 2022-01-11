@@ -14,7 +14,7 @@
 
 [remontti / Zabbix-Templates](https://github.com/remontti/Zabbix-Templates/tree/main/Huawei/BGP)
 
-[LAÇOS OU LOOPS COM SHELL SCRIPT (FOR, WHILE E UNTI](https://www.livrosdelinux.com.br/lacos-ou-loops-for-while-e-until/)
+[LAÇOS OU LOOPS COM SHELL SCRIPT (FOR, WHILE E UNTIL)](https://www.livrosdelinux.com.br/lacos-ou-loops-for-while-e-until/)
 
 [30 Exemplos de Comando SED Com Regex](https://terminalroot.com.br/2015/07/30-exemplos-do-comando-sed-com-regex.html)
 
