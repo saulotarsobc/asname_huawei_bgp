@@ -12,8 +12,6 @@
 
 [Bash For Loop Array: Iterate Through Array Values](https://www.cyberciti.biz/faq/bash-for-loop-array/)
 
-[How to use bash array in a shell script](https://linuxconfig.org/how-to-use-arrays-in-bash-script)
-
 [remontti / Zabbix-Templates](https://github.com/remontti/Zabbix-Templates/tree/main/Huawei/BGP)
 
 [LAÇOS OU LOOPS COM SHELL SCRIPT (FOR, WHILE E UNTI](https://www.livrosdelinux.com.br/lacos-ou-loops-for-while-e-until/)
@@ -76,7 +74,7 @@ done;
 
 ## Pré-processamento - Zabbix
 
-> Esse script tem o [CSV](https://rockcontent.com/br/blog/csv/) como formato de saida de dados. Por isso vamos usar o pre-processamento do Zabbix para convertelo para um formato Json.
+> Esse script tem o [CSV](https://rockcontent.com/br/blog/csv/) como formato de saida de dados. Por isso vamos usar o pre-processamento do Zabbix para converte-lo para um formato Json.
 
 ![Zabbix - Pre-processamento](img/pre%20processamento.png)
 
