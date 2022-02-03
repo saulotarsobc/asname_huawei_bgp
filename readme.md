@@ -60,6 +60,7 @@ states=($(snmpwalk -v 2c -c $1 $2 $OID.5 | sed 's/.*: //'));
 echo "ASNAME|SNMPINDEX|REMOTEADD|STATE";
 
 C=0;
+
 for i in "${as[@]}"; do
     ASNAME=$(whois -h whois.cymru.com  AS$i | egrep -v "AS Name");
     echo "$ASNAME|${snmpindexs[$C]}|${remoteaddress[$C]}|${states[$C]}";
