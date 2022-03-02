@@ -5,7 +5,7 @@ import json
 import sys
 
 if len(sys.argv) != 4:
-    exit('script <ip> <snmp port> <snmo community>')
+    print('script <ip> <snmp port> <snmo community>')
 
 else:
     IP = sys.argv[1]
