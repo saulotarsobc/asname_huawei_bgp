@@ -10,9 +10,9 @@ if [ "$2" = "" ]; then alert; fi;
 OID="1.3.6.1.4.1.2011.5.25.177.1.1.2.1";
 
 as=($(snmpwalk -v 2c -c $1 $2 $OID.2 | sed 's/.*: //'));
-snmpindexs=($(snmpwalk -v 2c -c $1 $2 $OID.2 | sed 's/ = .*//' | sed 's/iso.*.1.2.1.2.//'));
-remoteaddress=($(snmpwalk -v 2c -c $1 $2 $OID.4 | sed 's/.*: //' | sed 's/"//' | sed 's/"//'));
-states=($(snmpwalk -v 2c -c $1 $2 $OID.5 | sed 's/.*: //'));
+snmpindexs=($(snmpbulkwalk -v 2c -c $1 $2 $OID.2 | sed 's/ = .*//' | sed 's/iso.*.1.2.1.2.//'));
+remoteaddress=($(snmpbulkwalk -v 2c -c $1 $2 $OID.4 | sed 's/.*: //' | sed 's/"//' | sed 's/"//'));
+states=($(snmpbulkwalk -v 2c -c $1 $2 $OID.5 | sed 's/.*: //'));
 
 echo "ASNAME|SNMPINDEX|REMOTEADD|STATE";
 
