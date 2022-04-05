@@ -1,10 +1,10 @@
-#! /usr/bin/bash
+#! /bin/bash
 alert(){
     echo -e "Tente algo como: ./asname <DEVICE_COMUNITY> <DEVICE_IP>\nOu no zabbix: asname[{\$SNMP_COMMUNITY}, {HOST.IP}]";
     exit 0;
 }
 
-if [ "$1" = "" ]; then alert; fi; 
+if [ "$1" = "" ]; then alert; fi;
 if [ "$2" = "" ]; then alert; fi;
 
 OID="1.3.6.1.4.1.2011.5.25.177.1.1.2.1";
